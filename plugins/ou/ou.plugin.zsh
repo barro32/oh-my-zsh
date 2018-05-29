@@ -1,11 +1,28 @@
+staffportal='/home/daniel.barrington/dev/bfs/staff-portal'
+auth='/home/daniel.barrington/dev/bfs/auth'
+bf='/home/daniel.barrington/dev/bfs/ou-config/BritishFriendly'
+ou='/home/daniel.barrington/dev/ou'
+host='172.31.90.48'
+ouport='8080'
+dbpass='Pa55w0rd'
+dbhost='127.0.0.1'
+dbuser='root'
+helpers='/home/daniel.barrington/dev/bfs/helpers'
+
+
 # BFS Product
-alias oubuildall='(cd /home/daniel.barrington/dev/bfs/ou/ou-config/BritishFriendly; ant -f Build.xml -Dwebdav.host=172.31.90.48 -Dwebdav.port=8080 -Dou.home=/home/daniel.barrington/dev/bfs/ou/system)'
-alias oubuild='(cd /home/daniel.barrington/dev/bfs/ou/ou-config/BritishFriendly/Base && ant -f Build.xml  -Dwebdav.host=172.31.90.48 -Dwebdav.port=8080 -Dou.home=/home/daniel.barrington/dev/bfs/ou/system)'
-alias ouworkflow='(cd /home/daniel.barrington/dev/bfs/ou/ou-config/BritishFriendly; ant -f Build.xml -Dou.home=/home/daniel.barrington/dev/bfs/ou/system -Dworkflows.force-unload=true)'
-alias oudeploy='(cd /home/daniel.barrington/dev/bfs/ou/ou-config/BritishFriendly; ant -f Build.xml -Dou.home=/home/daniel.barrington/dev/bfs/ou/system -Dwebdav.host=52.210.69.137 -Dwebdav.port=80)'
-alias build='ant -f Build.xml -Dwebdav.host=172.31.90.48 -Dwebdav.port=8080 -Dou.home=/home/daniel.barrington/dev/bfs/ou/system'
+alias bfstart='cd $auth; ./setup.sh start; cd $staffportal; dcup'
+alias bfbuild='(cd $bf; ant -f Build.xml -Dwebdav.host=$host -Dwebdav.port=$ouport -Dou.home=$ou)'
+alias bfb='bfbuild'
+alias bfbuildbase='(cd $bf/Base && ant -f Build.xml -Dwebdav.host=$host -Dwebdav.port=$ouport -Dou.home=$ou)'
+alias bfbb='bfbuildbase'
+alias bfworkflow='(cd $bf; ant -f Build.xml -Dou.home=$ou -Dworkflows.force-unload=true)'
+alias bfbuildthis='(ant -Dou.home=$ou -Dwebdav.host=$host -Dwebdav.port=$ouport)'
+
 # OU
-alias oustart='cd /home/daniel.barrington/dev/bfs/ou/system; ant -f Build.xml -DDdbusername=root -Ddbpassword=Pa55w0rd -Dmysql.root.password=Pa55w0rd -Ddbhost=127.0.0.1 -DJBOSS_OPTS="-b 172.31.90.48" start'
+alias oustart='cd $ou; ant -f Build.xml -DDdbusername=$dbuser -Ddbpassword=$dbpass -Dmysql.$dbuser.password=$dbpass -Ddbhost=$dbhost -DJBOSS_OPTS="-b $host" stop start;'
 alias oustop='ant -f Build.xml stop'
-alias ousetup='cd /home/daniel.barrington/dev/bfs/ou/system; ant -f Build.xml -Ddbusername=root -Ddbpassword=Pa55w0rd -Dmysql.root.password=Pa55w0rd -Ddbhost=127.0.0.1 -DJBOSS_OPTS="-b 172.31.90.48" stop teardown setup'
-alias outeardown='cd /home/daniel.barrington/dev/bfs/ou/system; ant -f Build.xml -Ddbusername=root -Ddbpassword=Pa55w0rd -Dmysql.root.password=Pa55w0rd -Ddbhost=127.0.0.1 teardown'
+alias ousetup='cd $ou; ant -f Build.xml -Ddbusername=$dbuser -Ddbpassword=$dbpass -Dmysql.$dbuser.password=$dbpass -Ddbhost=$dbhost -DJBOSS_OPTS="-b $host" -Dnodemo=yes stop teardown setup start'
+alias outeardown='cd $ou; ant -f Build.xml -Ddbusername=$dbuser -Ddbpassword=$dbpass -Dmysql.$dbuser.password=$dbpass -Ddbhost=$dbhost teardown'
+
+alias createpolicy='node $helpers/create-policy.js'
