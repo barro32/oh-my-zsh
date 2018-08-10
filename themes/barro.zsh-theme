@@ -8,9 +8,10 @@ ZSH_THEME_GIT_PROMPT_RENAMED="R "
 ZSH_THEME_GIT_PROMPT_UNMERGED="U "
 ZSH_THEME_GIT_PROMPT_UNTRACKED="?? "
 
-purple="%F{135}"
+purple="%F{129}"
 turquoise="%F{81}"
-orange="%F{166}"
+orange="%F{208}"
+red="%F{160}"
 
 ZSH_THEME_GIT_PROMPT_PREFIX=""
 ZSH_THEME_GIT_PROMPT_SUFFIX=""
@@ -22,8 +23,8 @@ test $UID -eq 0 && user_color='red'
 
 PROMPT='%(?..%{$fg_bold[red]%}exit %?
 %{$reset_color%})'\
-'%{$fg[red]%}$(git_prompt_status)%{$bold_color%}%F{166}$(git_prompt_info)'\
-' %F{135}%~%{$reset_color%}'\
+'%{$fg[red]%}$(git_prompt_status)%{$bold_color%}%F{208}$(git_prompt_info)'\
+' %F{129}%~%{$reset_color%}'\
 '%(!.#.) '
 
 PROMPT2='%{$fg[red]%}\ %{$reset_color%}'
